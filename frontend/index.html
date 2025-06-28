@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Excel Uploader</title>
+</head>
+<body>
+    <h1>Upload Excel File</h1>
+    <input type="file" id="excelFile" />
+    <button onclick="upload()">Upload</button>
+    <pre id="output"></pre>
+    <script>
+        async function upload() {
+            const fileInput = document.getElementById('excelFile');
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+
+            const response = await fetch('http://localhost:10000/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            document.getElementById('output').textContent = JSON.stringify(result, null, 2);
+        }
+    </script>
+</body>
+</html>
